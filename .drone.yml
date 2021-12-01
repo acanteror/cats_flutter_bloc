@@ -7,4 +7,4 @@ steps:
     image: cirrusci/flutter:2.5.3
     commands:
       - flutter pub get
-      - flutter test integration_test
+      - flutter test -d emulator-5554 --machine --version integration_test integration_test
