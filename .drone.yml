@@ -3,6 +3,17 @@ type: docker
 name: catapp by HS
 
 steps:
+  - name: Publish To Firebase Test Lab
+    image: google/cloud-sdk:alpine
+    commands:
+      - echo "AAAAdIZnvB0:APA91bGd5tIeY1IuZ1MiYmA8xL8-sNjSrL3lCIEV-eLwzue38q_tbdhNUVDYJJlKAJL6XKI3yGd3ICsjUU0WM751r1sJsPEui9cX7XTYgA-2vZKkzBsrPsX74cWSdPvYPPDS_C86W9C5 "> /tmp/$CI_PIPELINE_ID.json
+      - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+      - gcloud components update
+      - gcloud auth login
+      - gcloud config set project learningtogether-a8e77
+      - gcloud firebase test android run \
+        --app app-fred-stage-debug.apk \
+        --device model=Nexus6,version=21,locale=en,orientation=portrait
   - name: unit tests
     image: cirrusci/flutter:2.5.3
     commands:
