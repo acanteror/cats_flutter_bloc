@@ -7,4 +7,9 @@ steps:
     image: cirrusci/flutter:2.5.3
     commands:
       - flutter pub get
-      - flutter test -d emulator-5554 --machine --version integration_test integration_test
+      - sdkmanager "system-images;android-27;google_apis_playstore;x86"
+      - flutter emulators --create "test"
+      - flutter emulators
+      - flutter emulators --launch flutter_emulator
+      - flutter devices
+      - flutter test integration_test
